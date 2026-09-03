@@ -30,9 +30,9 @@ public class Juego {
             return;
         }
 
-        actualizarPuntaje();
-
         tablero.agregarFicha(direccion);
+
+        actualizarPuntaje();
 
         if (!tablero.hayMovimientosPosibles()) {
             terminado = true;
