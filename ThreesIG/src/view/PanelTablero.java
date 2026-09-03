@@ -13,163 +13,189 @@ import javax.swing.SwingConstants;
 
 public class PanelTablero extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final int TAMANIO_TABLERO = 4;
+    private static final int TAMANIO_TABLERO = 4;
 
-	private JPanel[][] celdas;
+    private JPanel[][] celdas;
 
-	public PanelTablero() {
+    private Map<Integer, Color> colores;
 
-		setLayout(new GridLayout(
-				TAMANIO_TABLERO,
-				TAMANIO_TABLERO,
-				8,
-				8
-		));
+    public PanelTablero() {
 
-		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setLayout(
+                new GridLayout(
+                        TAMANIO_TABLERO,
+                        TAMANIO_TABLERO,
+                        8,
+                        8
+                )
+        );
 
-		celdas = new JPanel[TAMANIO_TABLERO][TAMANIO_TABLERO];
+        setBorder(
+                BorderFactory.createEmptyBorder(
+                        10, 10, 10, 10
+                )
+        );
 
-		inicializarTablero();
-	}
+        inicializarColores();
 
-	private void inicializarTablero() {
+        celdas =
+                new JPanel[TAMANIO_TABLERO][TAMANIO_TABLERO];
 
-		for (int fila = 0; fila < TAMANIO_TABLERO; fila++) {
+        inicializarTablero();
+    }
 
-			for (int columna = 0; columna < TAMANIO_TABLERO; columna++) {
+    private void inicializarColores() {
 
-				JPanel celda = crearCelda();
+        colores = new HashMap<>();
 
-				celdas[fila][columna] = celda;
+        colores.put(1, new Color(240, 220, 170));
+        colores.put(2, new Color(220, 190, 150));
+        colores.put(3, new Color(220, 220, 220));
+        colores.put(6, new Color(200, 200, 200));
+        colores.put(12, new Color(180, 210, 230));
+        colores.put(24, new Color(160, 190, 220));
+        colores.put(48, new Color(140, 170, 210));
+        colores.put(96, new Color(120, 150, 200));
+        colores.put(192, new Color(100, 130, 190));
+    }
 
-				add(celda);
-			}
-		}
-	}
+    private void inicializarTablero() {
 
-	private JPanel crearCelda() {
+        for (int fila = 0; fila < TAMANIO_TABLERO; fila++) {
 
-		JPanel celda = new JPanel();
+            for (int columna = 0;
+                    columna < TAMANIO_TABLERO;
+                    columna++) {
 
-		celda.setLayout(new GridLayout(1, 1));
+                JPanel celda = crearCelda();
 
-		celda.setBackground(new Color(210, 210, 210));
+                celdas[fila][columna] = celda;
 
-		celda.setBorder(
-				BorderFactory.createLineBorder(
-						new Color(180, 180, 180),
-						1
-				)
-		);
+                add(celda);
+            }
+        }
+    }
 
-		return celda;
-	}
+    private JPanel crearCelda() {
 
-	/**
-	 * Permite mostrar una ficha en una posición determinada.
-	 */
-	public void mostrarFicha(int fila, int columna, int valor) {
+        JPanel celda = new JPanel();
 
-		JPanel celda = celdas[fila][columna];
+        celda.setLayout(
+                new GridLayout(1, 1)
+        );
 
-		celda.removeAll();
+        celda.setBackground(
+                new Color(210, 210, 210)
+        );
 
-		JLabel ficha = crearFicha(valor);
+        celda.setBorder(
+                BorderFactory.createLineBorder(
+                        new Color(180, 180, 180),
+                        1
+                )
+        );
 
-		celda.add(ficha);
+        return celda;
+    }
 
-		celda.revalidate();
-		celda.repaint();
-	}
+    public void mostrarFicha(
+            int fila,
+            int columna,
+            int valor) {
 
-	/**
-	 * Elimina la ficha de una posición.
-	 */
-	public void vaciarCelda(int fila, int columna) {
+        JPanel celda =
+                celdas[fila][columna];
 
-		JPanel celda = celdas[fila][columna];
+        celda.removeAll();
 
-		celda.removeAll();
+        JLabel ficha =
+                crearFicha(valor);
 
-		celda.setBackground(new Color(210, 210, 210));
+        celda.add(ficha);
 
-		celda.revalidate();
-		celda.repaint();
-	}
+        celda.revalidate();
+        celda.repaint();
+    }
 
-	/**
-	 * Crea visualmente una ficha según su valor.
-	 */
-	private JLabel crearFicha(int valor) {
+    public void vaciarCelda(
+            int fila,
+            int columna) {
 
-		JLabel ficha = new JLabel(String.valueOf(valor));
+        JPanel celda =
+                celdas[fila][columna];
 
-		ficha.setHorizontalAlignment(SwingConstants.CENTER);
-		ficha.setVerticalAlignment(SwingConstants.CENTER);
+        celda.removeAll();
 
-		ficha.setFont(obtenerFuente(valor));
+        celda.setBackground(
+                new Color(210, 210, 210)
+        );
 
-		ficha.setOpaque(true);
+        celda.revalidate();
+        celda.repaint();
+    }
 
-		ficha.setBackground(obtenerColor(valor));
-		ficha.setForeground(Color.BLACK);
+    private JLabel crearFicha(int valor) {
 
-		ficha.setBorder(
-				BorderFactory.createLineBorder(
-						new Color(160, 160, 160),
-						1
-				)
-		);
+        JLabel ficha =
+                new JLabel(String.valueOf(valor));
 
-		return ficha;
-	}
+        ficha.setHorizontalAlignment(
+                SwingConstants.CENTER
+        );
 
-	/**
-	 * Determina el tamaño de fuente según la cantidad de dígitos.
-	 */
-	private Font obtenerFuente(int valor) {
+        ficha.setVerticalAlignment(
+                SwingConstants.CENTER
+        );
 
-		int tamanio = 32;
+        ficha.setFont(
+                obtenerFuente(valor)
+        );
 
-		if (valor >= 100) {
-			tamanio = 26;
-		}
+        ficha.setOpaque(true);
 
-		if (valor >= 1000) {
-			tamanio = 22;
-		}
+        ficha.setBackground(
+                obtenerColor(valor)
+        );
 
-		return new Font(
-				"SansSerif",
-				Font.BOLD,
-				tamanio
-		);
-	}
+        ficha.setForeground(Color.BLACK);
 
-	/**
-	 * Define el color visual de cada tipo de ficha.
-	 */
-	private Color obtenerColor(int valor) {
+        ficha.setBorder(
+                BorderFactory.createLineBorder(
+                        new Color(160, 160, 160),
+                        1
+                )
+        );
 
-		Map<Integer, Color> colores = new HashMap<>();
+        return ficha;
+    }
 
-		colores.put(1, new Color(240, 220, 170));
-		colores.put(2, new Color(220, 190, 150));
-		colores.put(3, new Color(220, 220, 220));
-		colores.put(6, new Color(200, 200, 200));
-		colores.put(12, new Color(180, 210, 230));
-		colores.put(24, new Color(160, 190, 220));
-		colores.put(48, new Color(140, 170, 210));
-		colores.put(96, new Color(120, 150, 200));
-		colores.put(192, new Color(100, 130, 190));
+    private Font obtenerFuente(int valor) {
 
-		if (colores.containsKey(valor)) {
-			return colores.get(valor);
-		}
+        int tamanio = 32;
 
-		return new Color(90, 120, 180);
-	}
+        if (valor >= 100) {
+            tamanio = 26;
+        }
+
+        if (valor >= 1000) {
+            tamanio = 22;
+        }
+
+        return new Font(
+                "SansSerif",
+                Font.BOLD,
+                tamanio
+        );
+    }
+
+    private Color obtenerColor(int valor) {
+
+        if (colores.containsKey(valor)) {
+            return colores.get(valor);
+        }
+
+        return new Color(90, 120, 180);
+    }
 }

@@ -6,119 +6,285 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import controller.JuegoController;
+import model.Direccion;
+
 public class VentanaPrincipal extends JFrame {
-	
-	
-	public static void main(String[] args) {
 
-		VentanaPrincipal ventana = new VentanaPrincipal();
+    private static final long serialVersionUID = 1L;
 
-		ventana.setLocationRelativeTo(null);
-		ventana.setVisible(true);
-	
-		panelTablero.mostrarFicha(0, 0, 1);
-		panelTablero.mostrarFicha(0, 1, 2);
-		panelTablero.mostrarFicha(1, 1, 3);
-		panelTablero.mostrarFicha(2, 2, 12);
-		panelTablero.mostrarFicha(3, 3, 48);
-	
-	}
-	
-	
+    private JPanel contentPane;
+    private JLabel lblPuntaje;
+    private PanelTablero panelTablero;
 
-	private static final long serialVersionUID = 1L;
+    private JuegoController controller;
 
-	private JPanel contentPane;
-	private JLabel lblPuntaje;
-	private static PanelTablero panelTablero;
+    public VentanaPrincipal() {
 
-	/**
-	 * Create the frame.
-	 */
-	public VentanaPrincipal() {
-		setTitle("Threes!");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 700);
-		setMinimumSize(new Dimension(500, 600));
+        setTitle("Threes!");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
-		contentPane.setLayout(new BorderLayout(10, 10));
-		setContentPane(contentPane);
+        setBounds(100, 100, 600, 700);
+        setMinimumSize(new Dimension(500, 600));
 
-		// =========================
-		// PANEL SUPERIOR
-		// =========================
+        contentPane = new JPanel();
+        contentPane.setBorder(
+                new EmptyBorder(15, 15, 15, 15)
+        );
 
-		JPanel panelSuperior = new JPanel();
-		panelSuperior.setLayout(new GridBagLayout());
+        contentPane.setLayout(
+                new BorderLayout(10, 10)
+        );
 
-		contentPane.add(panelSuperior, BorderLayout.NORTH);
+        setContentPane(contentPane);
 
-		JLabel lblTitulo = new JLabel("THREES!");
-		lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 32));
-		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        crearPanelSuperior();
 
-		GridBagConstraints gbcTitulo = new GridBagConstraints();
-		gbcTitulo.gridx = 0;
-		gbcTitulo.gridy = 0;
-		gbcTitulo.weightx = 1.0;
-		gbcTitulo.anchor = GridBagConstraints.WEST;
-		gbcTitulo.insets = new Insets(0, 0, 5, 0);
+        panelTablero = new PanelTablero();
 
-		panelSuperior.add(lblTitulo, gbcTitulo);
+        contentPane.add(
+                panelTablero,
+                BorderLayout.CENTER
+        );
 
-		// Puntaje
-		lblPuntaje = new JLabel("Puntaje: 0");
-		lblPuntaje.setFont(new Font("SansSerif", Font.BOLD, 18));
+        JLabel lblInstrucciones = new JLabel(
+                "Usá las flechas del teclado para mover las fichas"
+        );
 
-		GridBagConstraints gbcPuntaje = new GridBagConstraints();
-		gbcPuntaje.gridx = 1;
-		gbcPuntaje.gridy = 0;
-		gbcPuntaje.anchor = GridBagConstraints.EAST;
-		gbcPuntaje.insets = new Insets(0, 10, 5, 0);
+        lblInstrucciones.setHorizontalAlignment(
+                SwingConstants.CENTER
+        );
 
-		panelSuperior.add(lblPuntaje, gbcPuntaje);
+        lblInstrucciones.setFont(
+                new Font("SansSerif", Font.PLAIN, 14)
+        );
 
-		// Botón nueva partida
-		JButton btnNuevaPartida = new JButton("Nueva partida");
-		btnNuevaPartida.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        contentPane.add(
+                lblInstrucciones,
+                BorderLayout.SOUTH
+        );
 
-		GridBagConstraints gbcNuevaPartida = new GridBagConstraints();
-		gbcNuevaPartida.gridx = 1;
-		gbcNuevaPartida.gridy = 1;
-		gbcNuevaPartida.anchor = GridBagConstraints.EAST;
-		gbcNuevaPartida.insets = new Insets(5, 10, 0, 0);
+        configurarTeclado();
 
-		panelSuperior.add(btnNuevaPartida, gbcNuevaPartida);
+        controller = new JuegoController(this);
+    }
 
-		// =========================
-		// TABLERO
-		// =========================
+    private void crearPanelSuperior() {
 
-		panelTablero = new PanelTablero();
+        JPanel panelSuperior = new JPanel();
 
-		contentPane.add(panelTablero, BorderLayout.CENTER);
+        panelSuperior.setLayout(
+                new GridBagLayout()
+        );
 
-		// =========================
-		// PANEL INFERIOR
-		// =========================
+        contentPane.add(
+                panelSuperior,
+                BorderLayout.NORTH
+        );
 
-		JLabel lblInstrucciones = new JLabel(
-				"Usá las flechas del teclado para mover las fichas"
-		);
+        JLabel lblTitulo = new JLabel("THREES!");
 
-		lblInstrucciones.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInstrucciones.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        lblTitulo.setFont(
+                new Font(
+                        "SansSerif",
+                        Font.BOLD,
+                        32
+                )
+        );
 
-		contentPane.add(lblInstrucciones, BorderLayout.SOUTH);
-	}
+        GridBagConstraints gbcTitulo =
+                new GridBagConstraints();
+
+        gbcTitulo.gridx = 0;
+        gbcTitulo.gridy = 0;
+        gbcTitulo.weightx = 1.0;
+        gbcTitulo.anchor = GridBagConstraints.WEST;
+
+        gbcTitulo.insets =
+                new Insets(0, 0, 5, 0);
+
+        panelSuperior.add(
+                lblTitulo,
+                gbcTitulo
+        );
+
+        lblPuntaje = new JLabel("Puntaje: 0");
+
+        lblPuntaje.setFont(
+                new Font(
+                        "SansSerif",
+                        Font.BOLD,
+                        18
+                )
+        );
+
+        GridBagConstraints gbcPuntaje =
+                new GridBagConstraints();
+
+        gbcPuntaje.gridx = 1;
+        gbcPuntaje.gridy = 0;
+
+        gbcPuntaje.anchor =
+                GridBagConstraints.EAST;
+
+        gbcPuntaje.insets =
+                new Insets(0, 10, 5, 0);
+
+        panelSuperior.add(
+                lblPuntaje,
+                gbcPuntaje
+        );
+
+        JButton btnNuevaPartida =
+                new JButton("Nueva partida");
+
+        btnNuevaPartida.setFont(
+                new Font(
+                        "SansSerif",
+                        Font.PLAIN,
+                        14
+                )
+        );
+
+        btnNuevaPartida.addActionListener(
+                e -> controller.nuevaPartida()
+        );
+
+        GridBagConstraints gbcNuevaPartida =
+                new GridBagConstraints();
+
+        gbcNuevaPartida.gridx = 1;
+        gbcNuevaPartida.gridy = 1;
+
+        gbcNuevaPartida.anchor =
+                GridBagConstraints.EAST;
+
+        gbcNuevaPartida.insets =
+                new Insets(5, 10, 0, 0);
+
+        panelSuperior.add(
+                btnNuevaPartida,
+                gbcNuevaPartida
+        );
+    }
+
+    private void configurarTeclado() {
+
+        JRootPane rootPane = getRootPane();
+
+        rootPane.getInputMap(
+                JRootPane.WHEN_IN_FOCUSED_WINDOW
+        ).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0),
+                "moverArriba"
+        );
+
+        rootPane.getInputMap(
+                JRootPane.WHEN_IN_FOCUSED_WINDOW
+        ).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),
+                "moverAbajo"
+        );
+
+        rootPane.getInputMap(
+                JRootPane.WHEN_IN_FOCUSED_WINDOW
+        ).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0),
+                "moverIzquierda"
+        );
+
+        rootPane.getInputMap(
+                JRootPane.WHEN_IN_FOCUSED_WINDOW
+        ).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0),
+                "moverDerecha"
+        );
+
+        rootPane.getActionMap().put(
+                "moverArriba",
+                new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        controller.mover(Direccion.ARRIBA);
+                    }
+                }
+        );
+
+        rootPane.getActionMap().put(
+                "moverAbajo",
+                new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        controller.mover(Direccion.ABAJO);
+                    }
+                }
+        );
+
+        rootPane.getActionMap().put(
+                "moverIzquierda",
+                new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        controller.mover(Direccion.IZQUIERDA);
+                    }
+                }
+        );
+
+        rootPane.getActionMap().put(
+                "moverDerecha",
+                new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        controller.mover(Direccion.DERECHA);
+                    }
+                }
+        );
+    }
+
+    public PanelTablero getPanelTablero() {
+        return panelTablero;
+    }
+
+    public void actualizarPuntaje(int puntaje) {
+
+        lblPuntaje.setText(
+                "Puntaje: " + puntaje
+        );
+    }
+
+    public void mostrarGameOver() {
+
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "¡Game Over!\nPuntaje: " + 
+                controller.obtenerPuntaje(),
+                "Fin del juego",
+                javax.swing.JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+    public static void main(String[] args) {
+
+        javax.swing.SwingUtilities.invokeLater(() -> {
+
+            VentanaPrincipal ventana =
+                    new VentanaPrincipal();
+
+            ventana.setLocationRelativeTo(null);
+            ventana.setVisible(true);
+        });
+    }
 }
