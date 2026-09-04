@@ -110,9 +110,7 @@ public class Tablero {
 
             for (int columna = 0; columna < TAMANIO; columna++) {
 
-                int columnaReal = direccion == Direccion.IZQUIERDA
-                        ? columna
-                        : TAMANIO - 1 - columna;
+                int columnaReal = direccion == Direccion.IZQUIERDA ? columna : TAMANIO - 1 - columna;
 
                 linea.add(fichas[indice][columnaReal]);
             }
@@ -121,9 +119,7 @@ public class Tablero {
 
             for (int fila = 0; fila < TAMANIO; fila++) {
 
-                int filaReal = direccion == Direccion.ARRIBA
-                        ? fila
-                        : TAMANIO - 1 - fila;
+                int filaReal = direccion == Direccion.ARRIBA ? fila : TAMANIO - 1 - fila;
 
                 linea.add(fichas[filaReal][indice]);
             }
@@ -164,10 +160,7 @@ public class Tablero {
     }
         
 
-    private void guardarLinea(
-            int indice,
-            Direccion direccion,
-            List<Ficha> linea) {
+    private void guardarLinea(int indice, Direccion direccion, List<Ficha> linea) {
 
         for (int i = 0; i < TAMANIO; i++) {
 
@@ -190,9 +183,7 @@ public class Tablero {
         }
     }
 
-    private boolean lineasIguales(
-            List<Ficha> original,
-            List<Ficha> nueva) {
+    private boolean lineasIguales(List<Ficha> original, List<Ficha> nueva) {
 
         for (int i = 0; i < TAMANIO; i++) {
 
