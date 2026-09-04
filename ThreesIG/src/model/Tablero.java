@@ -134,46 +134,35 @@ public class Tablero {
 
     private List<Ficha> procesarLinea(List<Ficha> linea) {
 
-        List<Ficha> sinEspacios = new ArrayList<>();
+        List<Ficha> resultado = new ArrayList<>(linea);
 
-        for (Ficha ficha : linea) {
+        for (int i = 0; i < TAMANIO - 1 ; i++) {
+        	
+        	Ficha actual = resultado.get(i);
+        	Ficha siguiente = resultado.get(i + 1);
+        	
+        	if (actual == null && siguiente != null) {
 
-            if (ficha != null) {
-                sinEspacios.add(ficha);
-            }
+                resultado.set(i, siguiente);
+                resultado.set(i + 1, null);
+                
+        	}
+        	
+        	if (actual != null && siguiente != null && actual.puedeCombinarCon(siguiente)) {
+
+                Ficha combinada = actual.combinarCon(siguiente);
+
+                resultado.set(i, combinada);
+                resultado.set(i + 1, null);
+                
+               
+        	}
         }
-
-        List<Ficha> resultado = new ArrayList<>();
-
-        int i = 0;
-
-        while (i < sinEspacios.size()) {
-
-            Ficha actual = sinEspacios.get(i);
-
-            if (i + 1 < sinEspacios.size()
-                    && actual.puedeCombinarCon(sinEspacios.get(i + 1))) {
-
-                Ficha combinada =
-                        actual.combinarCon(sinEspacios.get(i + 1));
-
-                resultado.add(combinada);
-
-                i += 2;
-
-            } else {
-
-                resultado.add(actual);
-                i++;
-            }
-        }
-
-        while (resultado.size() < TAMANIO) {
-            resultado.add(null);
-        }
-
-        return resultado;
+        	
+        	return resultado;
+        	
     }
+        
 
     private void guardarLinea(
             int indice,
