@@ -51,7 +51,7 @@ public class JuegoController {
                 } else {
 
                     int valor = juego.getTablero().getFicha(fila, columna).getValor();
-
+                    
                     tableroView.mostrarFicha(fila, columna, valor);
                 }
             }

@@ -76,7 +76,7 @@ public class VentanaPrincipal extends JFrame {
 
         JLabel lblTitulo = new JLabel("THREES!");
 
-        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 32));
+        lblTitulo.setFont(new Font("SansSerif", Font.BOLD,32));
 
         GridBagConstraints gbcTitulo = new GridBagConstraints();
 
@@ -119,7 +119,7 @@ public class VentanaPrincipal extends JFrame {
 
         gbcNuevaPartida.insets = new Insets(5, 10, 0, 0);
 
-        panelSuperior.add(btnNuevaPartida, gbcNuevaPartida);
+        panelSuperior.add(btnNuevaPartida,gbcNuevaPartida);
     }
 
     private void configurarTeclado() {
@@ -132,7 +132,7 @@ public class VentanaPrincipal extends JFrame {
 
         rootPane.getInputMap(JRootPane.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "moverIzquierda");
 
-        rootPane.getInputMap(JRootPane.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "MoverDerecha");
+        rootPane.getInputMap(JRootPane.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "moverDerecha");
 
         rootPane.getActionMap().put(
                 "moverArriba",

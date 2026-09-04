@@ -160,7 +160,10 @@ public class Tablero {
     }
         
 
-    private void guardarLinea(int indice, Direccion direccion, List<Ficha> linea) {
+    private void guardarLinea(
+            int indice,
+            Direccion direccion,
+            List<Ficha> linea) {
 
         for (int i = 0; i < TAMANIO; i++) {
 
@@ -183,7 +186,9 @@ public class Tablero {
         }
     }
 
-    private boolean lineasIguales(List<Ficha> original, List<Ficha> nueva) {
+    private boolean lineasIguales(
+            List<Ficha> original,
+            List<Ficha> nueva) {
 
         for (int i = 0; i < TAMANIO; i++) {
 

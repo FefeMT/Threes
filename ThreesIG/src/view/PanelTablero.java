@@ -23,7 +23,7 @@ public class PanelTablero extends JPanel {
 
     public PanelTablero() {
 
-        setLayout(new GridLayout(TAMANIO_TABLERO,TAMANIO_TABLERO,8,8));
+        setLayout(new GridLayout(TAMANIO_TABLERO, TAMANIO_TABLERO, 8, 8));
 
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -79,11 +79,11 @@ public class PanelTablero extends JPanel {
 
     public void mostrarFicha(int fila, int columna, int valor) {
 
-        JPanel celda =celdas[fila][columna];
+        JPanel celda = celdas[fila][columna];
 
         celda.removeAll();
 
-        JLabel ficha =crearFicha(valor);
+        JLabel ficha = crearFicha(valor);
 
         celda.add(ficha);
 
@@ -91,9 +91,9 @@ public class PanelTablero extends JPanel {
         celda.repaint();
     }
 
-    public void vaciarCelda(int fila,int columna) {
+    public void vaciarCelda(int fila, int columna) {
 
-        JPanel celda =celdas[fila][columna];
+        JPanel celda = celdas[fila][columna];
 
         celda.removeAll();
 
@@ -119,7 +119,7 @@ public class PanelTablero extends JPanel {
 
         ficha.setForeground(Color.BLACK);
 
-        ficha.setBorder(BorderFactory.createLineBorder(new Color(160, 160, 160),1));
+        ficha.setBorder(BorderFactory.createLineBorder(new Color(160, 160, 160), 1));
 
         return ficha;
     }
@@ -136,7 +136,7 @@ public class PanelTablero extends JPanel {
             tamanio = 22;
         }
 
-        return new Font("SansSerif",Font.BOLD,tamanio);
+        return new Font("SansSerif", Font.BOLD, tamanio);
     }
 
     private Color obtenerColor(int valor) {
